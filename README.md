@@ -9,7 +9,7 @@ documentation.
 ## Install
 
 ``` sh
-pip install {{lib_path}}
+pip install youtube-timestamper
 ```
 
 ## How to use
@@ -17,11 +17,56 @@ pip install {{lib_path}}
 Fill me in please! Don’t forget code examples:
 
 ``` python
-1+1
+yt_ts = YoutubeTimestamper("https://www.youtube.com/watch?v=QGCvycOXs2M")
 ```
-
-    2
 
 ``` python
-bar()
+yt_ts.suggest_question_timestamps()
 ```
+
+    /home/ilangurudev/anaconda3/envs/ds/lib/python3.9/site-packages/transformers/pipelines/base.py:1036: UserWarning: You seem to be using the pipelines sequentially on GPU. In order to maximize efficiency please use a dataset
+      warnings.warn(
+
+    00:00:00 Start
+    00:01:08 how did he transition into data science and cargill and his journey on kaggle?
+    00:02:23 can you tell us a bit more about that, chris, now that you remember of it the secret?
+    00:02:48 did you get your invite to the fight clubs yet, or can you share a bit about those?
+    00:04:21 can? can you share the timeline about that? how did that timeline look like before, before you joined the kaggle world?
+    00:04:44 then i, um i graduated with a bachelor's degree in mathematics and then, um, immediately afterwards, i?
+    00:07:19 when did kaggle come into the picture? when did you find your addiction for kagan?
+    00:08:28 you know you build a model and is your model more accurate than the other guy's model?
+    00:10:15 how did you go from just starting your journey to today being the forex grandmaster?
+    00:10:22 how would you advise? what should they read? what should they learn?
+    00:10:26 do you think there's such a list?
+    00:11:49 was it part of the enjoyment process, just getting involved, or were you making a conscious effort to? you know, maybe list down points where you need to improve?
+    00:12:40 and even if a competition or something looks similar to a previous one, i say to myself: you know, what new angle can i do here? you know what new thing can i learn?
+    00:13:39 uh, any favorite battle stories?
+    00:13:39 any favorite battle stories you that you might remember?
+    00:14:33 so there's many competitions and you see the leaderboard and there's a bunch of scores and there's, you know, the top 50, they have a little bit of a jump, and there's and people in the forum say: you know magic, what's the magic?
+    00:19:45 i do better at kaggle if i'm just i'm just doing fun stuff and not just saying: what do i need to do to win?
+    00:21:16 i need to think about it and usually the best way to learn something is to ask yourself: hey, if i was to explain this to another person, how would i do it?
+    00:22:05 so, and that's something that i also enjoy very much- on the flip side, do you feel you're also losing a competitive edge?
+    00:22:25 does you do lose an edge?
+    00:25:56 what would be your advice?
+    00:25:45 what, what advice would you have for them? they're just chasing uh, maybe the title, since it's gamified, does it annoy you? do you have any uh advice for such people?
+    00:32:51 uh, any favorite memories from discussions that you might have?
+    00:34:37 and then someone says, wow, that's awesome, hey, have you thought about doing this?
+    00:25:45 um, what advice would you have for people who people, many people, seek teaming up because they may be asking to just compete by themselves? but what teaming advice would you have for people in general? or what's your strategy?
+    00:38:47 what's your reason for investing so much time into kagan?
+    00:03:39 you know people might see it and say, why is he doing so much for the community?
+    00:39:05 you know, how have i, how have i, you know, learned these ideas so well?
+    00:40:14 and then what does kaggle do?
+    00:40:53 i mean, how does a computer know how to draw dogs?
+    00:02:23 uh, can you tell us more about your role at nvidia and what is it in your life on non-pandemic days?
+    00:43:49 pandas build psychic learn, okay, uh, but what, what the wrap is team doing is?
+    00:45:38 is the desk data plotted on top of the train data or is the test data over here? like: is this group of images the same as this group of images?
+    00:38:47 what's, what's your secret to time management?
+    00:50:30 uh, is it okay if we do a quick rapid fire questions? uh, a set of questions? so what would you like? so, would you like to me give short answers?
+    00:51:12 okay, a favorite course that you've taught? uh, i'm not sure if you've taught a few or was it just a single one? oh, okay, yeah, so, uh, favorite course?
+    00:52:38 okay, um, favorite algorithm?
+    00:09:02 it's just how do you classify this guy? well, how do you class with this data point?
+    00:50:43 but, uh, your favorite framework?
+    00:51:12 okay, um, favorite competition that you've taken part in?
+    00:55:17 you're refreshing your computer, refreshing your computer, how did i do? how did i do? it's unbelievable, right?
+    00:25:56 um, what would be your favorite spot to surf? wait, favorite what sport? to windsurf?
+    01:01:24 uh, your favorite way to unwind, uh, from data science or kaggle?

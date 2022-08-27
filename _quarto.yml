@@ -16,7 +16,6 @@ format:
 
 website:
   title: "youtube-timestamper"
-  site-url: "https://ilangurudev.github.io/youtube-timestamper/"
   description: "A python library to automatically create timestamps for youtube interview videos using NLP."
   execute: 
     enabled: false
@@ -24,14 +23,14 @@ website:
   open-graph: true
   reader-mode: true
   repo-branch: main
-  repo-url: "https://github.com/ilangurudev/youtube-timestamper/"
+  repo-url: https://github.com/ilangurudev/youtube-timestamper/
   repo-actions: [issue]
   navbar:
     background: primary
     search: true
     right:
       - icon: github
-        href: "https://github.com/ilangurudev/youtube-timestamper/"
+        href: https://github.com/ilangurudev/youtube-timestamper/
   sidebar:
     style: "floating"
 
