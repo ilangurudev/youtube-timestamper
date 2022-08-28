@@ -5,8 +5,8 @@ youtube_timestamper
 
 ## Live Demo
 
-Huggingface Spaces Demo:
-https://huggingface.co/spaces/Gurudev/youtube_timestamper
+[Huggingface Spaces
+Demo](https://huggingface.co/spaces/Gurudev/youtube_timestamper)
 
 ## How to use
 
