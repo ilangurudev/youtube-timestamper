@@ -122,7 +122,7 @@ def suggest_question_timestamps(
     self: YoutubeTimestamper,
     next_q_thresh: int = 15,  # The number of tokens within a question which if the next question is present, it'll be considered part of the same question
 ) -> None:
-    """Get the timestamps"""
+    """Suggest timestamps based on questions found in the transcripts."""
     self._get_transcript()
     self._restore_punctuations()
     self._get_sentences()
