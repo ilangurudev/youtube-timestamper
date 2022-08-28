@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.75">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Core functionality of YoutubeTimestamper">
+
+<title>youtube-timestamper - core</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: 1;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="youtube-timestamper - core">
+<meta property="og:description" content="Core functionality of YoutubeTimestamper">
+<meta property="og:site-name" content="youtube-timestamper">
+<meta name="twitter:title" content="youtube-timestamper - core">
+<meta name="twitter:description" content="Core functionality of YoutubeTimestamper">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">youtube-timestamper</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ilangurudev/youtube-timestamper/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">core</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">youtube_timestamper</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link active">core</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#youtubetimestamper" id="toc-youtubetimestamper" class="nav-link active" data-scroll-target="#youtubetimestamper">YoutubeTimestamper</a></li>
+  <li><a href="#get-transcripts-from-the-id" id="toc-get-transcripts-from-the-id" class="nav-link" data-scroll-target="#get-transcripts-from-the-id">Get transcripts from the id</a></li>
+  <li><a href="#restore-punctuations" id="toc-restore-punctuations" class="nav-link" data-scroll-target="#restore-punctuations">Restore Punctuations</a></li>
+  <li><a href="#getting-questions" id="toc-getting-questions" class="nav-link" data-scroll-target="#getting-questions">Getting questions</a></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a>
+  <ul>
+  <li><a href="#youtubetimestamper.suggest_question_timestamps" id="toc-youtubetimestamper.suggest_question_timestamps" class="nav-link" data-scroll-target="#youtubetimestamper.suggest_question_timestamps">YoutubeTimestamper.suggest_question_timestamps</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ilangurudev/youtube-timestamper/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">core</h1>
+</div>
+
+<div>
+  <div class="description">
+    Core functionality of <code>YoutubeTimestamper</code>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>The program flow for generating timestamps is relatively simple:</p>
+<ol type="1">
+<li>Get the id from the youtube video url passed</li>
+<li>Fetch the transcripts from the id and concatenate them</li>
+<li>Use <code>deepmultilingualpunctuation</code> to restore punctuations</li>
+<li>Use <code>spacy</code> to split into senteces</li>
+<li>Get sentences that have <code>?</code> and match them up with the timestamps</li>
+</ol>
+<hr>
+<p><a href="https://github.com/ilangurudev/youtube-timestamper/blob/main/youtube_timestamper/core.py#L19" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="youtubetimestamper" class="level3">
+<h3 class="anchored" data-anchor-id="youtubetimestamper">YoutubeTimestamper</h3>
+<blockquote class="blockquote">
+<pre><code> YoutubeTimestamper (video_url:str)</code></pre>
+</blockquote>
+<p>A class that extracts the transcript from a youtube video, identifies the questions in it and attaches timestamps to them.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>video_url</td>
+<td>str</td>
+<td>A url of a YouTube Video</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_url <span class="op">=</span> <span class="st">"https://www.youtube.com/watch?v=QGCvycOXs2M"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>yt_timestamper <span class="op">=</span> YoutubeTimestamper(sample_url)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>yt_timestamper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>__main__.YoutubeTimestamper(video_url='https://www.youtube.com/watch?v=QGCvycOXs2M')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper.video_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'https://www.youtube.com/watch?v=QGCvycOXs2M'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>test_eq(yt_timestamper._get_yt_id(), <span class="st">"QGCvycOXs2M"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="get-transcripts-from-the-id" class="level2">
+<h2 class="anchored" data-anchor-id="get-transcripts-from-the-id">Get transcripts from the id</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._get_transcript()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper.transcript[:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[{'text': '[Music]', 'start': 1.28, 'duration': 12.54},
+ {'text': "hey this is sayam bhutani and you're",
+  'start': 13.92,
+  'duration': 2.56},
+ {'text': 'listening to', 'start': 15.679, 'duration': 3.68}]</code></pre>
+</div>
+</div>
+<p>This is the raw unpunctuated transcript</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._transcript_str[:<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>"[Music] hey this is sayam bhutani and you're listening to chai time data science a podcast for data science enthusiasts where i interview practitioners researchers and calculus about their journey experience and talk all things about data science [Music] hello and welcome to quarantine chai with kaggle heroes with this new look i am interviewing the new 4x kaggle grandmaster chris dude chris has an amazing very diverse and very rich background and we connect the dots of his journey his professio"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(yt_timestamper.transcript) <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="st">","</span> <span class="kw">not</span> <span class="kw">in</span> yt_timestamper._transcript_str[:<span class="dv">500</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="st">"."</span> <span class="kw">not</span> <span class="kw">in</span> yt_timestamper._transcript_str[:<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="restore-punctuations" class="level2">
+<h2 class="anchored" data-anchor-id="restore-punctuations">Restore Punctuations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._restore_punctuations()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/ilangurudev/anaconda3/envs/ds/lib/python3.9/site-packages/transformers/pipelines/base.py:1036: UserWarning: You seem to be using the pipelines sequentially on GPU. In order to maximize efficiency please use a dataset
+  warnings.warn(</code></pre>
+</div>
+</div>
+<p>The punctuations have now been added.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._transcript_punct[:<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>"[Music]. hey, this is sayam bhutani and you're listening to chai time- data science, a podcast for data science enthusiasts where i interview practitioners, researchers and calculus about their journey experience and talk all things about data science. [Music]. hello and welcome to quarantine chai with kaggle heroes. with this new look, i am interviewing the new 4x kaggle grandmaster, chris dude. chris has an amazing, very diverse and very rich background and we connect the dots of his journey, "</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="st">","</span> <span class="kw">in</span> yt_timestamper._transcript_punct[:<span class="dv">500</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="st">"."</span> <span class="kw">in</span> yt_timestamper._transcript_punct[:<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="getting-questions" class="level2">
+<h2 class="anchored" data-anchor-id="getting-questions">Getting questions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._get_sentences()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>yt_timestamper.transcript_sents[<span class="dv">5</span>:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(#5) [chris has an amazing, very diverse and very rich background and we connect the dots of his journey, his professional journey, with data science.,we talk about his previous life.,how did he transition into data science and cargill and his journey on kaggle?,chris at the time of recording has just become a forex kaggle ground master.,he's ranked 32 on the competition steer, two on the data sets tier and is currently number one in kernels and discussions.]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(yt_timestamper.transcript_sents) <span class="op">&gt;</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._get_questions()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>yt_timestamper.questions[:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(#3) ['how did he transition into data science and cargill and his journey on kaggle?','can you tell us a bit more about that, chris, now that you remember of it the secret?','did you get your invite to the fight clubs yet, or can you share a bit about those?']</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(yt_timestamper.questions) <span class="op">&gt;</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._get_timestamps_for_questions()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(yt_timestamper.timestamps) <span class="op">&gt;</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper.timestamps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(#36) [(0, 'Introduction'),(68.64, 'how did he transition into data science and cargill and his journey on kaggle?'),(143.52, 'can you tell us a bit more about that, chris, now that you remember of it the secret?'),(168.56, 'did you get your invite to the fight clubs yet, or can you share a bit about those?'),(284.479, "then i, um i graduated with a bachelor's degree in mathematics and then, um, immediately afterwards, i?"),(439.599, 'when did kaggle come into the picture? when did you find your addiction for kagan?'),(508.879, "you know you build a model and is your model more accurate than the other guy's model?"),(615.12, 'how did you go from just starting your journey to today being the forex grandmaster?'),(709.36, 'was it part of the enjoyment process, just getting involved, or were you making a conscious effort to? you know, maybe list down points where you need to improve?'),(760.079, 'and even if a competition or something looks similar to a previous one, i say to myself: you know, what new angle can i do here? you know what new thing can i learn?')...]</code></pre>
+</div>
+</div>
+</section>
+<section id="outputs" class="level2">
+<h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper._render_timestamps(limit<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>00:00:00 Introduction
+00:01:08 how did he transition into data science and cargill and his journey on kaggle?
+00:02:23 can you tell us a bit more about that, chris, now that you remember of it the secret?
+00:02:48 did you get your invite to the fight clubs yet, or can you share a bit about those?
+00:04:44 then i, um i graduated with a bachelor's degree in mathematics and then, um, immediately afterwards, i?
+00:07:19 when did kaggle come into the picture? when did you find your addiction for kagan?
+00:08:28 you know you build a model and is your model more accurate than the other guy's model?
+00:10:15 how did you go from just starting your journey to today being the forex grandmaster?
+00:11:49 was it part of the enjoyment process, just getting involved, or were you making a conscious effort to? you know, maybe list down points where you need to improve?
+00:12:40 and even if a competition or something looks similar to a previous one, i say to myself: you know, what new angle can i do here? you know what new thing can i learn?
+
+Created using youtube-timestamper - https://ilangurudev.github.io/youtube-timestamper/</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/ilangurudev/youtube-timestamper/blob/main/youtube_timestamper/core.py#LNone" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="youtubetimestamper.suggest_question_timestamps" class="level3">
+<h3 class="anchored" data-anchor-id="youtubetimestamper.suggest_question_timestamps">YoutubeTimestamper.suggest_question_timestamps</h3>
+<blockquote class="blockquote">
+<pre><code> YoutubeTimestamper.suggest_question_timestamps (next_q_thresh:int=15)</code></pre>
+</blockquote>
+<p>Suggest timestamps based on questions found in the transcripts.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>next_q_thresh</td>
+<td>int</td>
+<td>15</td>
+<td>The number of tokens within a question which if the next question is present, it’ll be considered part of the same question</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>None</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>yt_timestamper.suggest_question_timestamps()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>00:00:00 Introduction
+00:01:08 how did he transition into data science and cargill and his journey on kaggle?
+00:02:23 can you tell us a bit more about that, chris, now that you remember of it the secret?
+00:02:48 did you get your invite to the fight clubs yet, or can you share a bit about those?
+00:04:44 then i, um i graduated with a bachelor's degree in mathematics and then, um, immediately afterwards, i?
+00:07:19 when did kaggle come into the picture? when did you find your addiction for kagan?
+00:08:28 you know you build a model and is your model more accurate than the other guy's model?
+00:10:15 how did you go from just starting your journey to today being the forex grandmaster?
+00:11:49 was it part of the enjoyment process, just getting involved, or were you making a conscious effort to? you know, maybe list down points where you need to improve?
+00:12:40 and even if a competition or something looks similar to a previous one, i say to myself: you know, what new angle can i do here? you know what new thing can i learn?
+00:13:49 any favorite battle stories you that you might remember?
+00:14:33 so there's many competitions and you see the leaderboard and there's a bunch of scores and there's, you know, the top 50, they have a little bit of a jump, and there's and people in the forum say: you know magic, what's the magic?
+00:16:03 um, do you, do you have any uh, rigid approach to competitions now, or did you compete in any in parallel, or do you just stick to one? and what's your approach in general to competitions now?
+00:22:05 so, and that's something that i also enjoy very much- on the flip side, do you feel you're also losing a competitive edge?
+00:25:45 thank you, um, what advice would you have for uh, newbies who are looking to write kernels?
+00:30:58 what, what advice would you have for them? they're just chasing uh, maybe the title, since it's gamified, does it annoy you? do you have any uh advice for such people?
+00:32:51 uh, any favorite memories from discussions that you might have?
+00:34:37 and then someone says, wow, that's awesome, hey, have you thought about doing this?
+00:35:35 um, what advice would you have for people who people, many people, seek teaming up because they may be asking to just compete by themselves? but what teaming advice would you have for people in general? or what's your strategy?
+00:38:47 what's your reason for investing so much time into kagan?
+00:38:58 you know people might see it and say, why is he doing so much for the community?
+00:39:05 you know, how have i, how have i, you know, learned these ideas so well?
+00:43:49 pandas build psychic learn, okay, uh, but what, what the wrap is team doing is?
+00:45:38 is the desk data plotted on top of the train data or is the test data over here? like: is this group of images the same as this group of images?
+00:47:11 how do you, chris, how do you manage your time?
+00:47:18 what's, what's your secret to time management?
+00:49:44 but, as i said, you know, if someone's like, hey, can you? you know, can you follow the?
+00:50:30 uh, is it okay if we do a quick rapid fire questions? uh, a set of questions? so what would you like? so, would you like to me give short answers?
+00:51:12 okay, a favorite course that you've taught? uh, i'm not sure if you've taught a few or was it just a single one? oh, okay, yeah, so, uh, favorite course?
+00:52:11 do you know that? the derivative is exactly what your brain uses for you to learn something?
+00:52:38 okay, um, favorite algorithm?
+00:52:54 it's just how do you classify this guy? well, how do you class with this data point?
+00:53:55 okay, um, favorite competition that you've taken part in?
+00:55:20 you're refreshing your computer, refreshing your computer, how did i do? how did i do? it's unbelievable, right?
+01:00:28 um, what would be your favorite spot to surf? wait, favorite what sport? to windsurf?
+01:01:24 uh, your favorite way to unwind, uh, from data science or kaggle?
+
+Created using youtube-timestamper - https://ilangurudev.github.io/youtube-timestamper/</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
