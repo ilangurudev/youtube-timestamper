@@ -13,6 +13,7 @@ import spacy
 from spacy.lang.en import English
 from fastcore.all import *
 import datetime
+import re
 
 # %% ../00_core.ipynb 6
 class YoutubeTimestamper:
@@ -95,18 +96,21 @@ def _get_timestamps_for_questions(
     self: YoutubeTimestamper,
 ) -> None:
     """Matches the questions with the timestamps"""
-    timestamps = L([(0, "Start")])
+    timestamps = L([(0, "Introduction")])
+    transcript_pieces = [t for t in self.transcript]
     for question in self.questions:
-        for ts in self.transcript:
-            if question[10:20] in ts["text"]:
-                # print(question)
-                # print(ts)
-                # print("-" * 100)
+        question_nopunct = re.sub("[,.?!]", "", question)
+        for ts in transcript_pieces:
+            if (ts["text"] in question_nopunct) and (
+                question_nopunct[10:20] in ts["text"]
+            ):
                 timestamps.append((ts["start"], question))
+                # print((ts["start"], ts["text"], question))
                 break
+        transcript_pieces.remove(ts)
     self.timestamps = timestamps
 
-# %% ../00_core.ipynb 34
+# %% ../00_core.ipynb 35
 @patch
 def _render_timestamps(self: YoutubeTimestamper, limit=None) -> None:
     """Renders the timestamps in the right format"""
@@ -115,17 +119,21 @@ def _render_timestamps(self: YoutubeTimestamper, limit=None) -> None:
         timestamp = f"{datetime.timedelta(seconds=t[0])}"
         timestamp = timestamp.split(".")[0].rjust(8, "0")
         print(timestamp, t[1])
+    print(
+        "\nCreated using youtube-timestamper (https://ilangurudev.github.io/youtube-timestamper/)"
+    )
 
-# %% ../00_core.ipynb 36
+# %% ../00_core.ipynb 37
 @patch
 def suggest_question_timestamps(
     self: YoutubeTimestamper,
     next_q_thresh: int = 15,  # The number of tokens within a question which if the next question is present, it'll be considered part of the same question
 ) -> None:
     """Suggest timestamps based on questions found in the transcripts."""
-    self._get_transcript()
-    self._restore_punctuations()
-    self._get_sentences()
+    if "self.questions" not in vars():
+        self._get_transcript()
+        self._restore_punctuations()
+        self._get_sentences()
     self._get_questions(next_q_thresh)
     self._get_timestamps_for_questions()
     self._render_timestamps()
