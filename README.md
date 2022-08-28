@@ -11,18 +11,8 @@ pip install youtube-timestamper
 
 ## How to use
 
-In this example, we look at Sanyam Bhutani’s interview of Kaggle legend
-Chris Deotte:
-
-        <iframe
-            width="700"
-            height="400"
-            src="https://www.youtube.com/embed/QGCvycOXs2M"
-            frameborder="0"
-            allowfullscreen
-            
-        ></iframe>
-        
+In this example, we look at [Sanyam Bhutani’s interview of Kaggle legend
+Chris Deotte](https://www.youtube.com/watch?v=QGCvycOXs2M).
 
 This interview contains a wealth of knowledge but it’s not timestamped
 with chapter divisions. This library can help create timestamped
@@ -85,7 +75,7 @@ yt_ts.suggest_question_timestamps(next_q_thresh=20)
     01:00:28 um, what would be your favorite spot to surf? wait, favorite what sport? to windsurf?
     01:01:24 uh, your favorite way to unwind, uh, from data science or kaggle?
 
-    Created using youtube-timestamper (https://ilangurudev.github.io/youtube-timestamper/)
+    Created using youtube-timestamper - https://ilangurudev.github.io/youtube-timestamper/
 
 ------------------------------------------------------------------------
 
@@ -131,7 +121,7 @@ you’ve taught<br /> 00:52:38 Favorite Algorithm<br /> 00:53:55 Favorite
 Competition so far<br /> 01:00:28 Favorite spot to surf<br /> 01:01:24
 Favorite way to unwind from data science and Kaggle<br />
 
-Created using youtube-timestamper
-(https://ilangurudev.github.io/youtube-timestamper/)
+Created using youtube-timestamper -
+https://ilangurudev.github.io/youtube-timestamper/
 
 Now simply copy paste as a comment in the video!

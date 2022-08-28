@@ -120,7 +120,7 @@ def _render_timestamps(self: YoutubeTimestamper, limit=None) -> None:
         timestamp = timestamp.split(".")[0].rjust(8, "0")
         print(timestamp, t[1])
     print(
-        "\nCreated using youtube-timestamper (https://ilangurudev.github.io/youtube-timestamper/)"
+        "\nCreated using youtube-timestamper - https://ilangurudev.github.io/youtube-timestamper/"
     )
 
 # %% ../00_core.ipynb 37
